@@ -14,13 +14,15 @@ if (isset($_GET['id'])) {
 
     $pname = $data['PName'];
     $pprice = $data['PPrice'];
-    $dcharge = 50;
+    $dcharge = 150;
     $pimg = $data['PImage'];
 } else {
     echo "No Product found";
 }
 
 $pquantity = $_POST['quantity'];
+$tprice = $pprice + $dcharge;
+$t_price = $tprice * $pquantity;
 // echo $pquantity;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
@@ -33,20 +35,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     if (empty($email) || empty($contact) || empty($name) || empty($address)) {
         die("Error: All fields are required.");
     } else {
-        $insert = "INSERT INTO `parts_sells` (`Part Name`, `Part Price`, `Quantity`, `Email`, `Name`, `Contact`, `Address`) VALUES ('$pname', '$pprice', '$pquantity', '$email', '$name', '$contact', '$address')";
+        $insert = "INSERT INTO `product_sell`(`PName`, `PPrice`, `PImage`, `user_name`, `Email`, `Contact`) VALUES ('$pname','$pprice','$pimg','$name','$email','$contact')";
         mysqli_query($conn, $insert);
-
-        $updateQuery = "UPDATE parts SET p_quantity = p_quantity - ? WHERE ID = ?";
-        $stmt = mysqli_prepare($conn, $updateQuery);
-        mysqli_stmt_bind_param($stmt, "ii", $pquantity, $id);
-        mysqli_stmt_execute($stmt);
         $_SESSION['alert_message'] = "Payment successful!";
         header('Location:index.php');
     }
 }
 
-$tprice = $pprice + $dcharge;
-$t_price = $tprice * $pquantity;
 ?>
 <!DOCTYPE html>
 <html>
@@ -161,12 +156,6 @@ $t_price = $tprice * $pquantity;
                         </td>
                     </tr>
                     <tr>
-                        <th>Product Quantity : </th>
-                        <td>
-                            <?php echo $pquantity; ?>
-                        </td>
-                    </tr>
-                    <tr>
                         <th>Delivery Charge : </th>
                         <td>₹
                             <?php echo $dcharge; ?>
@@ -196,7 +185,6 @@ $t_price = $tprice * $pquantity;
                 }
                 ;
                 ?>
-                <input type="number" name="quantity" value="<?php echo $pquantity; ?>" hidden>
                 <input type="text" name="name" required placeholder="Enter your Name" class="box">
                 <input type="email" name="email" placeholder="Enter your Email" required class="box">
                 <input type="number" name="contact" required placeholder="Enter your Contact Number" class="box">

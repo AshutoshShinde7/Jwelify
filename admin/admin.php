@@ -38,7 +38,7 @@ if (!isset($_SESSION['admin_name'])) {
                   <a href="add-category.php" class="btn">Add Category</a>
                   <a href="user_data.php" class="btn">Users</a>
                   <a href="jwel.php" class="btn">Jwelery</a>
-                  <a href="parts-sells.php" class="btn">Jwelery Sells</a>
+                  <a href="selld.php" class="btn">Jwelery Sells</a>
                   <a href="feedback-d.php" class="btn">Feedbacks</a>
                </div>
             </div>

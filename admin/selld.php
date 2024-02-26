@@ -53,31 +53,35 @@
 
    <div>
       <h2>User Data</h2>
-      <a href="admin.php" class="form-btn">Back</a>
+      <a href="admin.php" class="btn">Back</a>
    </div>
    <?php
    include '../config.php';
    if (mysqli_connect_errno()) {
       die("Failed to connect to MySQL: " . mysqli_connect_error());
    }
-   $query = "SELECT * FROM feedback";
+   $query = "SELECT * FROM product_sell";
    $result = mysqli_query($conn, $query);
    if (mysqli_num_rows($result) > 0) {
       echo "<table border='1'>
         <tr>
             <th>ID</th>
-            <th>Full Name</th>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Name</th>
             <th>Email</th>
             <th>Contact</th>
-            <th>Feedback</th>
         </tr>";
       while ($row = mysqli_fetch_assoc($result)) {
          echo "<tr>
-            <td>{$row['ID']}</td>
-            <td>{$row['Full Name']}</td>
+            <td>{$row['iD']}</td>
+            <td>{$row['PImage']}</td>
+            <td>{$row['PName']}</td>
+            <td>{$row['PPrice']}</td>
+            <td>{$row['user_name']}</td>
             <td>{$row['Email']}</td>
             <td>{$row['Contact']}</td>
-            <td>{$row['Feedback']}</td>
         </tr>";
       }
       echo "</table>";
